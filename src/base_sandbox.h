@@ -43,8 +43,20 @@ struct mnt {
     char *path;
 };
 
+/**
+ * @brief 网络配置，你可以通过下面网址了解相关信息
+ * https://learnku.com/docs/go-micro-build/1.0/explain-the-network-mode-of-vmware-and-docker/8879
+ */
 struct net{
     char *path;
+    enum {
+        host,        /*主机模式，即与宿主机IP一样*/
+        bridge,      /*桥接模式，与宿主机处于同一个网段下*/
+        nat,         /*nat模式，即创建虚拟交换机，默认10.10.0.0*/
+        none,        /*无网模式，就存在一个lo本地环回设备*/
+    }net_mode;
+    unsigned char ipv4[4];   /*ipv4,ipv6默认可以不用设置，host，none设置无效，目前暂时不支持IPV6*/
+    unsigned char ipv6[];    /*bridge设置IP必须在同一网段下，nat设置IP若无交换机网段则重新创建虚拟交换机*/
 };
 
 struct pid{
@@ -57,6 +69,8 @@ struct user {
 
 struct uts{
     char *path;
+    char *hostname;   /*主机名*/
+    char *domainname; /*NIS域名https://blog.csdn.net/qq_41959899/article/details/105948440*/
 };
 
 struct time{
@@ -70,14 +84,14 @@ struct sandboxConfig {
         struct { int flag;int suite; };
         unsigned long id;
     };
-    cgroup cgroup;
-    ipc ipc;
-    mnt mnt;
-    net net;
-    pid pid;
-    user user;
-    uts uts;
-    time time;
+    cgroup *cgroup;
+    ipc    *ipc;
+    mnt    *mnt;
+    net    *net;
+    pid    *pid;
+    user   *user;
+    uts    *uts;
+    time   *time;
 };
 
 
