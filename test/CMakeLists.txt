@@ -6,7 +6,7 @@ include_directories(unity)
 include_directories(../src)
 aux_source_directory(unity UNITY)
 add_library(unity SHARED ${UNITY})
-
+add_executable(test_op test.c test.c test_ust.c)
 #add_executable(test-op main.c)
 #target_link_libraries(test-op unity base_sandbox)
 #

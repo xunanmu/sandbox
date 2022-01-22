@@ -6,6 +6,15 @@
 
 #ifndef SANDBOX_BASE_SANDBOX_H
 #define SANDBOX_BASE_SANDBOX_H
+#define _GNU_SOURCE
+#include <elog.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/mount.h>
+#include <sched.h>
 
 #define KiB(x) (1024*(x))
 #define MiB(x) (1024*KiB(x))
