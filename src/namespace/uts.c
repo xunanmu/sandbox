@@ -7,7 +7,6 @@
 #include "uts.h"
 
 
-
 /**
  * @brief
  * @param ust
@@ -23,6 +22,10 @@ int set_ust(struct uts *ust) {
     if (flag == -1) {
         log_e("set hostname fail.");
         return flag;
+    }
+    /*验证路径,没有就创建*/
+    if(create_file(ust->path) == false){
+        return -1;
     }
     char source[256];
     sprintf(source, "/proc/%d/ns/ust", getpid());
@@ -60,6 +63,6 @@ int clone_ust(struct uts *uts) {
     return status;
 }
 
-bool creat_ust(struct uts *uts) {
+bool create_ust(struct uts *uts) {
     return clone_ust(uts) == 0;
 }

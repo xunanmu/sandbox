@@ -4,3 +4,10 @@
  * @description: 
  */
 
+#include <unity.h>
+#include <uts.h>
+
+int main(int argc, char *argv[]) {
+    creat_ust((struct uts){.path=""})
+    return 0;
+}

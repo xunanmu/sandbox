@@ -4,6 +4,7 @@ set(CMAKE_C_STANDARD 99)
 
 include_directories(unity)
 include_directories(../src)
+include_directories(../src/namespace)
 aux_source_directory(unity UNITY)
 add_library(unity SHARED ${UNITY})
 add_executable(test_op test.c test.c test_ust.c)

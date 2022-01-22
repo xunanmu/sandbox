@@ -14,7 +14,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/mount.h>
+#include <sys/stat.h>
 #include <sched.h>
+#include <dirent.h>
 
 #define KiB(x) (1024*(x))
 #define MiB(x) (1024*KiB(x))
@@ -45,4 +47,10 @@ struct sandboxConfig {
 };
 
 
+/**
+ * @brief 自动创建文件目录路径
+ * @param path_file
+ * @return bool
+ */
+bool create_file(char *path_file);
 #endif //SANDBOX_BASE_SANDBOX_H
