@@ -25,16 +25,16 @@ bool create_file(char *path_file) {
             DIR *flag = opendir(dir);
             if(flag == NULL){
                 if (mkdir(dir,0300)==-1){
-                    log_e("create [dir:%s] fail.\n",dir);
+                    log_e("create dir fail.[dir:%s]",dir);
                     return false;
                 }
             }
-        } else if (fopen(dir,"w")==NULL){
-            log_e("create [file:%s] fail.\n",dir);
+        } else if (open(dir,O_CREAT)==-1){
+            log_e("create file fail.[file:%s]",dir);
             return false;
         }
         log_d("[%s,%c]",dir,*path);
     }
-    log_i("create %s success.",path_file);
+    log_i("create file success.[file:%s]",path_file);
     return true;
 }

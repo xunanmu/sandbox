@@ -29,13 +29,13 @@ int set_ust(struct uts *uts) {
     }
     char source[256];
     sprintf(source, "/proc/%d/ns/uts", getpid());
-    flag = mount(source, uts->path, "nsfs", MS_BIND, "rw");/*https://www.cnblogs.com/SchrodingerDoggy/p/13597572.html*/
+    flag = mount(source, uts->path, "nsfs", MS_BIND, "ro");/*https://www.cnblogs.com/SchrodingerDoggy/p/13597572.html*/
     if (flag == -1) {
         perror("");
         log_e("mount uts fail.[%s,%s]", source, uts->path);
         return flag;
     }
-    log_i("set uts success,[path:%s,hostname:%s,domainname:%s]", uts->path, uts->hostname, uts->domainname);
+    log_i("set uts success,{path:%s,hostname:%s,domainname:%s}", uts->path, uts->hostname, uts->domainname);
     return flag;
 }
 
