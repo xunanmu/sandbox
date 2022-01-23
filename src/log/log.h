@@ -16,19 +16,20 @@
 #include <sys/time.h>
 #include <time.h>
 
-enum LogLevel { log_trace, log_debug, log_info, log_warn, log_error };
-static const char *log_tags[] = {"Trace", "Debug", "Info", "Warn", "Error"};
-static const char *log_colors[] = {"\x1b[94m", "\x1b[36m", "\x1b[32m", "\x1b[33m", "\x1b[31m"};
+void log_output(int level, int line, const char *file, const char *func, const char *fmt, ...);
 
-void log_output(enum LogLevel, int line, const char *file, const char *func, const char *fmt, ...);
-
+#define LOG_TRACE 0
+#define LOG_DEBUG 1
+#define lOG_INFO  2
+#define lOG_WARN  3
+#define lOG_ERROR 4
 #define LOG_OUTPUT(level, ...) log_output(level,__LINE__,__FILE__,__FUNCTION__,__VA_ARGS__)
-#define log_e(...) LOG_OUTPUT(log_error,__VA_ARGS__)
-#define log_w(...) LOG_OUTPUT(log_warn ,__VA_ARGS__)
-#define log_i(...) LOG_OUTPUT(log_info ,__VA_ARGS__)
-#define log_d(...) LOG_OUTPUT(log_debug,__VA_ARGS__)
-#define log_t(...) LOG_OUTPUT(log_trace,__VA_ARGS__)
-#define LOG_LEVEL_SCOPE(x) (log_trace<=(x)&&(x)<=log_error)
+#define log_e(...) LOG_OUTPUT(lOG_ERROR,__VA_ARGS__)
+#define log_w(...) LOG_OUTPUT(lOG_WARN,__VA_ARGS__)
+#define log_i(...) LOG_OUTPUT(lOG_INFO ,__VA_ARGS__)
+#define log_d(...) LOG_OUTPUT(LOG_DEBUG,__VA_ARGS__)
+#define log_t(...) LOG_OUTPUT(LOG_TRACE,__VA_ARGS__)
+#define LOG_LEVEL_SCOPE(x) (LOG_TRACE<=(x)&&(x)<=lOG_ERROR)
 #define LOG_OUT stdout
 
 

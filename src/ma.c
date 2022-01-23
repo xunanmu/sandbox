@@ -10,10 +10,10 @@
 
 int main(int argc, char *argv[]) {
 
-    system("umount /root/ns/ust");
+    system("umount /root/ns/uts");
     struct uts uts ={
-            .path="/root/ns/ust",
-            .hostname="test_ust",
+            .path="/root/ns/uts",
+            .hostname="test_uts",
             .domainname="test_domainname"
     };
     if(create_uts(&uts) == false) printf("create_uts(&uts)失败\n");

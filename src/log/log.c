@@ -6,6 +6,9 @@
 
 #include "log.h"
 
+static const char *log_tags[] = {"Trace", "Debug", "Info", "Warn", "Error"};
+static const char *log_colors[] = {"\x1b[94m", "\x1b[36m", "\x1b[32m", "\x1b[33m", "\x1b[31m"};
+
 char* log_time(){
     struct timeval timeval;
     gettimeofday(&timeval,NULL);
@@ -14,7 +17,7 @@ char* log_time(){
     now[strftime(now,sizeof(now),"%Y-%m-%d %H:%M:%S.",tm)] = 0;
 }
 
-void log_output(enum LogLevel level, int line, const char *file, const char *func, const char *fmt, ...){
+void log_output(int level, int line, const char *file, const char *func, const char *fmt, ...){
     if(!LOG_LEVEL_SCOPE(level)) return;
     /*时间格式设置*/
     struct timeval timeval;

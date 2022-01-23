@@ -9,32 +9,33 @@
 
 /**
  * @brief
- * @param ust
+ * @param uts
  * @return 成功返回0，失败返回-1；
  */
-int set_ust(struct uts *ust) {
-    int flag = sethostname(ust->hostname, strlen(ust->hostname));
+int set_ust(struct uts *uts) {
+    int flag = sethostname(uts->hostname, strlen(uts->hostname));
     if (flag == -1) {
         log_e("set hostname fail.");
         return flag;
     }
-    flag = setdomainname(ust->domainname, strlen(ust->domainname));
+    flag = setdomainname(uts->domainname, strlen(uts->domainname));
     if (flag == -1) {
         log_e("set hostname fail.");
         return flag;
     }
     /*验证路径,没有就创建*/
-    if(create_file(ust->path) == false){
+    if(create_file(uts->path) == false){
         return -1;
     }
     char source[256];
-    sprintf(source, "/proc/%d/ns/ust", getpid());
-    flag = mount(source, ust->path, "nsfs", MS_BIND, "rw");/*https://www.cnblogs.com/SchrodingerDoggy/p/13597572.html*/
+    sprintf(source, "/proc/%d/ns/uts", getpid());
+    flag = mount(source, uts->path, "nsfs", MS_BIND, "rw");/*https://www.cnblogs.com/SchrodingerDoggy/p/13597572.html*/
     if (flag == -1) {
-        log_e("mount ust fail.[%s,%s]", source, ust->path);
+        perror("");
+        log_e("mount uts fail.[%s,%s]", source, uts->path);
         return flag;
     }
-    log_i("set ust success,[path:%s,hostname:%s,domainname:%s]", ust->path, ust->hostname, ust->domainname);
+    log_i("set uts success,[path:%s,hostname:%s,domainname:%s]", uts->path, uts->hostname, uts->domainname);
     return flag;
 }
 

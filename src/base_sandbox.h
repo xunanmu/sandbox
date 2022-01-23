@@ -56,5 +56,4 @@ struct sandboxConfig {
  * @return bool
  */
 bool create_file(char *path_file);
-void start_log();
 #endif //SANDBOX_BASE_SANDBOX_H
