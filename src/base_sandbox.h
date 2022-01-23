@@ -7,7 +7,7 @@
 #ifndef SANDBOX_BASE_SANDBOX_H
 #define SANDBOX_BASE_SANDBOX_H
 #define _GNU_SOURCE
-#include <elog.h>
+#include <log/log.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -18,6 +18,7 @@
 #include <sched.h>
 #include <dirent.h>
 #include <mqueue.h>
+#include <stdbool.h>
 
 
 #define KiB(x) (1024*(x))
