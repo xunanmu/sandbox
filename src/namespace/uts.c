@@ -13,15 +13,22 @@
  * @return 成功返回0，失败返回-1；
  */
 int set_ust(struct uts *uts) {
-    int flag = sethostname(uts->hostname, strlen(uts->hostname));
-    if (flag == -1) {
-        log_e("set hostname fail.");
-        return flag;
+    int flag = 0;
+    /*设置主机名，如果为空则不设置*/
+    if (uts->hostname){
+        flag = sethostname(uts->hostname, strlen(uts->hostname));
+        if (flag == -1) {
+            log_e("set hostname fail.");
+            return flag;
+        }
     }
-    flag = setdomainname(uts->domainname, strlen(uts->domainname));
-    if (flag == -1) {
-        log_e("set hostname fail.");
-        return flag;
+    /*设置域名，如果为空则不设置*/
+    if (uts->domainname){
+        flag = setdomainname(uts->domainname, strlen(uts->domainname));
+        if (flag == -1) {
+            log_e("set hostname fail.");
+            return flag;
+        }
     }
     /*验证路径,没有就创建*/
     if(create_file(uts->path) == false){
@@ -40,6 +47,7 @@ int set_ust(struct uts *uts) {
 }
 
 int enter_ust(void *uts) {
+    log_i("start set uts");
     int flag = set_ust(uts);
     if (flag == -1){
         log_e("set uts fail.[flag:%d]",flag);

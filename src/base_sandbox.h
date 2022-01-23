@@ -19,6 +19,8 @@
 #include <dirent.h>
 #include <mqueue.h>
 #include <stdbool.h>
+#include <namespace/uts.h>
+
 
 
 #define KiB(x) (1024*(x))

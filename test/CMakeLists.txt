@@ -4,16 +4,18 @@ set(CMAKE_C_STANDARD 99)
 
 include_directories(unity)
 include_directories(../src)
-include_directories(../src/namespace)
 aux_source_directory(unity UNITY)
 add_library(unity SHARED ${UNITY})
 
 
 
-add_executable(test_uts test_ust.c)
-target_link_libraries(test_uts unity base_sandbox )
+add_executable(test_create_ust test_create_ust.c)
+target_link_libraries(test_create_ust unity base_sandbox )
 
-add_test(test_uts test_uts)
+add_executable(test_create_file test_create_file.c)
+target_link_libraries(test_create_file unity base_sandbox )
 
+add_test(test_create_ust test_create_ust)
+add_test(test_create_file test_create_file)
 
 

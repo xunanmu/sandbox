@@ -29,9 +29,13 @@ bool create_file(char *path_file) {
                     return false;
                 }
             }
-        } else if (open(dir,O_CREAT)==-1){
-            log_e("create file fail.[file:%s]",dir);
-            return false;
+        } else{
+            if (open(dir,O_CREAT)==-1){
+                log_e("create file fail.[file:%s]",dir);
+                return false;
+            }
+            log_d("[%s,%c]",dir,*path);
+            break;
         }
         log_d("[%s,%c]",dir,*path);
     }
