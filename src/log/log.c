@@ -38,5 +38,5 @@ void log_output(enum LogLevel level, int line, const char *file, const char *fun
     va_start(args,fmt);
     vfprintf(LOG_OUT,fmt,args);
     va_end(args);
-    printf("\n");
+    printf("\x1b[0m\n");
 }

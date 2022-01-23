@@ -6,7 +6,6 @@
 
 #include "uts.h"
 #define LOG_TAG "main"
-#define log_e printf
 
 /**
  * @brief
@@ -30,7 +29,7 @@ int set_ust(struct uts *ust) {
     }
     char source[256];
     sprintf(source, "/proc/%d/ns/ust", getpid());
-    flag = mount(source, ust->path, "nsfs", MS_BIND, "ro");/*https://www.cnblogs.com/SchrodingerDoggy/p/13597572.html*/
+    flag = mount(source, ust->path, "nsfs", MS_BIND, "rw");/*https://www.cnblogs.com/SchrodingerDoggy/p/13597572.html*/
     if (flag == -1) {
         log_e("mount ust fail.[%s,%s]", source, ust->path);
         return flag;
@@ -41,8 +40,9 @@ int set_ust(struct uts *ust) {
 
 int enter_ust(void *uts) {
     int flag = set_ust(uts);
-
-    log_i("[flag:%d]",flag);
+    if (flag == -1){
+        log_e("set uts fail.[flag:%d]",flag);
+    }
     exit(flag);
 }
 
@@ -53,7 +53,9 @@ int clone_ust(struct uts *uts) {
         log_e("malloc(MiB(1)) fail.");
         return -1;
     }
+    log_t("clone 前");
     pid_t pid = clone(enter_ust, child_stack + MiB(1), CLONE_NEWUTS | SIGCHLD, uts);
+    log_t("clone 后");
     if (pid == -1) {
         log_e("clone ust fail.");
         return -1;
@@ -68,5 +70,6 @@ int clone_ust(struct uts *uts) {
 }
 
 bool create_uts(struct uts *uts) {
+    log_i("start create uts={path:%s,hostname:%s,domainname:%s}",uts->path,uts->hostname,uts->domainname);
     return clone_ust(uts) == 0;
 }

@@ -35,6 +35,6 @@ bool create_file(char *path_file) {
         }
         log_d("[%s,%c]",dir,*path);
     }
-    log_i("create %s success\n",path_file);
+    log_i("create %s success.\n",path_file);
     return true;
 }

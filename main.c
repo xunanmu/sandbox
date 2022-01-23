@@ -48,7 +48,7 @@ void test_elog(void) {
         /* test log output for all level */
         log_a("%d",123);
         log_e("Hello EasyLogger!");
-        log_w("Hello EasyLogger!");
+        log_w();
         log_i("Hello EasyLogger!");
         log_d("Hello EasyLogger!");
         log_v("Hello EasyLogger!");
