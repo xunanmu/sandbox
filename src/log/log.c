@@ -10,9 +10,9 @@ static const char *log_tags[] = {"Trace", "Debug", "Info", "Warn", "Error"};
 static const char *log_colors[] = {"\x1b[94m", "\x1b[36m", "\x1b[32m", "\x1b[33m", "\x1b[31m"};
 
 char* log_time(){
-    struct timeval timeval;
-    gettimeofday(&timeval,NULL);
-    struct tm *tm = localtime(&timeval.tv_sec);
+    struct timespec timespec;
+    clock_gettime(CLOCK_REALTIME,&timespec);
+    struct tm *tm = localtime(&timespec.tv_sec);
     char now[64];
     now[strftime(now,sizeof(now),"%Y-%m-%d %H:%M:%S.",tm)] = 0;
 }
