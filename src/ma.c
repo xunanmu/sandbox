@@ -19,7 +19,11 @@ int main(int argc, char *argv[]) {
 //    sleep(100000);
 
     for (int i = log_trace; i <= log_error; ++i) {
-        log_out(i,"test log\n");
+        log_e("test log");
+        log_w("");
+        log_i("%s%d","ugvhrfiu",13342);
+        log_d("");
+        log_t("test log");
     }
     return 0;
 }
