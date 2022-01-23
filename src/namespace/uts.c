@@ -5,7 +5,8 @@
  */
 
 #include "uts.h"
-
+#define LOG_TAG "main"
+#define log_e printf
 
 /**
  * @brief
@@ -40,6 +41,8 @@ int set_ust(struct uts *ust) {
 
 int enter_ust(void *uts) {
     int flag = set_ust(uts);
+
+    log_i("[flag:%d]",flag);
     exit(flag);
 }
 
@@ -55,14 +58,15 @@ int clone_ust(struct uts *uts) {
         log_e("clone ust fail.");
         return -1;
     }
+
     if (waitpid(pid, &status, 0) == -1) {
         log_e("[waitpid:%d] fail.", pid);
         return -1;
     }
-    log_i("[status:%d]",status);
-    return status;
+    log_i("[status:%d]", WEXITSTATUS(status));
+    return WEXITSTATUS(status);
 }
 
-bool create_ust(struct uts *uts) {
+bool create_uts(struct uts *uts) {
     return clone_ust(uts) == 0;
 }

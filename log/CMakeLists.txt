@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
+project(sandbox)
+set(CMAKE_C_STANDARD 99)
 
 include_directories(easylogger/inc)
 include_directories(easylogger/plugins/file)

@@ -17,6 +17,8 @@
 #include <sys/stat.h>
 #include <sched.h>
 #include <dirent.h>
+#include <mqueue.h>
+
 
 #define KiB(x) (1024*(x))
 #define MiB(x) (1024*KiB(x))
@@ -53,4 +55,5 @@ struct sandboxConfig {
  * @return bool
  */
 bool create_file(char *path_file);
+void start_log();
 #endif //SANDBOX_BASE_SANDBOX_H

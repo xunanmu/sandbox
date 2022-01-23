@@ -23,5 +23,5 @@ struct uts{
  * @param uts->domainname,如果NULL则默认域
  * @return bool
  */
-bool create_ust(struct uts* uts);
+bool create_uts(struct uts* uts);
 #endif //SANDBOX_UTS_H

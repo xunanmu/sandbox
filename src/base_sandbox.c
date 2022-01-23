@@ -6,6 +6,7 @@
 
 #include "base_sandbox.h"
 
+
 bool create_file(char *path_file) {
     char dir[256];
     char *path = path_file;
@@ -16,21 +17,24 @@ bool create_file(char *path_file) {
             ++path;
             ++i;
         }
+        dir[i] = *path;
+        ++path;
+        ++i;
         dir[i] = 0;
-        if (*path != 0){
+        if (path[-1] != 0){
             DIR *flag = opendir(dir);
             if(flag == NULL){
                 if (mkdir(dir,0300)==-1){
-                    log_e("create [dir:%s] fail.",dir);
+                    log_e("create [dir:%s] fail.\n",dir);
                     return false;
                 }
             }
         } else if (fopen(dir,"w")==NULL){
-            log_e("create [file:%s] fail.",dir);
+            log_e("create [file:%s] fail.\n",dir);
             return false;
         }
-        dir[i] = *path;
-        ++path;
+        log_d("[%s,%c]",dir,*path);
     }
+    log_i("create %s success\n",path_file);
     return true;
 }
