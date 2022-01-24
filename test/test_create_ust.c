@@ -8,20 +8,16 @@
 #include <sys/utsname.h>
 
 void setUp(void) {
-    system("umount /root/ns/uts");
     printf("-------------------------------------------------------------------------\n");
 }
 
 void tearDown(void) {
-    system("umount /root/ns/uts");
     printf("\n========================================================================\n");
 
 }
 extern int set_ust(struct uts *uts);
 
 void test_create_uts_1(){
-    //start_log();
-    system("umount /root/ns/uts");
     struct uts uts ={
             .path="/root/ns/uts",
             .hostname="test_uts",
@@ -38,7 +34,6 @@ void test_create_uts_1(){
 }
 
 void test_create_uts_2(){
-    system("umount /root/ns/uts");
     struct uts uts ={
             .path="/root/ns/uts",
             .hostname="test_uts",
@@ -57,7 +52,6 @@ void test_create_uts_2(){
 }
 
 void test_create_uts_3(){
-    system("umount /root/ns/uts");
     struct uts uts ={
             .path="/root/ns/uts",
             .hostname=NULL,
@@ -75,7 +69,6 @@ void test_create_uts_3(){
 }
 
 void test_create_uts_4(){
-    system("umount /root/ns/uts");
     struct uts uts ={
             .path="/root/ns/uts",
             .hostname=NULL,
@@ -93,7 +86,6 @@ void test_create_uts_4(){
 }
 
 void test_create_uts_5(){
-    system("umount /root/ns/uts");
     struct uts uts ={
             .path="/root/ns/uts",
             .hostname="",

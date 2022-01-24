@@ -15,7 +15,11 @@ target_link_libraries(test_create_ust unity base_sandbox )
 add_executable(test_create_file test_create_file.c)
 target_link_libraries(test_create_file unity base_sandbox )
 
+add_executable(clear_mount_uts.c clear_mount_uts.c)
+
 add_test(test_create_ust test_create_ust)
+add_test(clear_mount_uts.c clear_mount_uts.c)
 add_test(test_create_file test_create_file)
+
 
 

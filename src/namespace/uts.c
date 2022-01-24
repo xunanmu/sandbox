@@ -5,7 +5,6 @@
  */
 
 #include "uts.h"
-#define LOG_TAG "main"
 
 /**
  * @brief
@@ -26,7 +25,7 @@ int set_ust(struct uts *uts) {
     if (uts->domainname){
         flag = setdomainname(uts->domainname, strlen(uts->domainname));
         if (flag == -1) {
-            log_e("set hostname fail.");
+            log_e("set domainname fail.");
             return flag;
         }
     }
@@ -48,15 +47,11 @@ int set_ust(struct uts *uts) {
 
 int enter_ust(void *uts) {
     log_i("start set uts");
-    int flag = set_ust(uts);
-    if (flag == -1){
-        log_e("set uts fail.[flag:%d]",flag);
-    }
-    exit(flag);
+    exit(set_ust(uts));
 }
 
 int clone_ust(struct uts *uts) {
-    int status = 0;
+    int status = -1;
     void *child_stack = malloc(MiB(1));
     if (child_stack == NULL) {
         log_e("malloc(MiB(1)) fail.");
@@ -67,18 +62,25 @@ int clone_ust(struct uts *uts) {
     log_t("clone 后");
     if (pid == -1) {
         log_e("clone ust fail.");
-        return -1;
+        goto free;
     }
-
+    /*等待子进程*/
     if (waitpid(pid, &status, 0) == -1) {
         log_e("[waitpid:%d] fail.", pid);
-        return -1;
+        goto free;
     }
     log_i("[status:%d]", WEXITSTATUS(status));
     return WEXITSTATUS(status);
+    free:
+    free(child_stack);
+    return -1;
 }
 
 bool create_uts(struct uts *uts) {
     log_i("start create uts={path:%s,hostname:%s,domainname:%s}",uts->path,uts->hostname,uts->domainname);
-    return clone_ust(uts) == 0;
+    bool flag = (clone_ust(uts) == 0);
+    if (flag){
+        log_i("create uts success! uts={path:%s,hostname:%s,domainname:%s}",uts->path,uts->hostname,uts->domainname);
+    }
+    return flag;
 }
