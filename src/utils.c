@@ -41,3 +41,16 @@ bool create_file(char *path_file) {
     log_i("create file success.[file:%s]",path_file);
     return true;
 }
+
+bool is_same_inode(char *first_file_path, char *second_file_path) {
+    struct stat first_file_stat;
+    struct stat second_file_stat;
+    if (-1 == stat(first_file_path,&first_file_stat)){
+        log_e("stat filed. [%s]",first_file_path);
+    }
+    if (-1 == stat(second_file_path,&second_file_stat)){
+        log_e("stat filed. [%s]",second_file_stat);
+    }
+    log_t("inode={%ul,%ul}",first_file_stat.st_ino,second_file_stat.st_ino);
+    return first_file_stat.st_ino == second_file_stat.st_ino;
+}

@@ -16,4 +16,11 @@
  */
 bool create_file(char *path_file);
 
+/**
+ * @brief 判断两个文件的路径是不是同一个节点
+ * @param first_file_path
+ * @param second_file_path
+ * @return bool
+ */
+bool is_same_inode(char *first_file_path,char *second_file_path);
 #endif //SANDBOX_UTILS_H
