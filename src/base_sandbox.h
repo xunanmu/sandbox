@@ -52,10 +52,4 @@ struct sandboxConfig {
 };
 
 
-/**
- * @brief 自动创建文件目录路径
- * @param path_file
- * @return bool
- */
-bool create_file(char *path_file);
 #endif //SANDBOX_BASE_SANDBOX_H
