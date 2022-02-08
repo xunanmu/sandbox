@@ -5,6 +5,11 @@
  */
 
 #include "utils.h"
+#include <log/log.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <mqueue.h>
+#include <stddef.h>
 
 bool create_file(char *path_file) {
     char dir[256];
@@ -51,6 +56,6 @@ bool is_same_inode(char *first_file_path, char *second_file_path) {
     if (-1 == stat(second_file_path,&second_file_stat)){
         log_e("stat filed. [%s]",second_file_stat);
     }
-    log_t("inode={%ul,%ul}",first_file_stat.st_ino,second_file_stat.st_ino);
+    log_t("inode={%s=%ul,%s=%ul}",first_file_path,first_file_stat.st_ino,second_file_path,second_file_stat.st_ino);
     return first_file_stat.st_ino == second_file_stat.st_ino;
 }

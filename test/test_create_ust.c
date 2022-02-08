@@ -3,9 +3,15 @@
  * @date: 2022/1/22 23:28
  * @description: 
  */
-#include <base_sandbox.h>
+#define _GNU_SOURCE
 #include <unity.h>
+#include <unistd.h>
+#include <sched.h>
+#include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
 #include <sys/utsname.h>
+#include "namespace/uts.h"
 
 void setUp(void) {
     printf("-------------------------------------------------------------------------\n");

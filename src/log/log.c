@@ -5,6 +5,13 @@
  */
 
 #include "log.h"
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include <sys/time.h>
+#include <time.h>
 
 static const char *log_tags[] = {"Trace", "Debug", "Info", "Warn", "Error"};
 static const char *log_colors[] = {"\x1b[94m", "\x1b[36m", "\x1b[32m", "\x1b[33m", "\x1b[31m"};

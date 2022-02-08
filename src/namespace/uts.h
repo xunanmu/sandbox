@@ -6,7 +6,7 @@
 
 #ifndef SANDBOX_UTS_H
 #define SANDBOX_UTS_H
-#include "base_sandbox.h"
+#include <stdbool.h>
 
 struct uts{
     char *path;

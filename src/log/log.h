@@ -6,15 +6,7 @@
 
 #ifndef SANDBOX_LOG_H
 #define SANDBOX_LOG_H
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/time.h>
-#include <time.h>
+
 
 void log_output(int level, int line, const char *file, const char *func, const char *fmt, ...);
 

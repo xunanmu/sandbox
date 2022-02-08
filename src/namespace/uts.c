@@ -4,7 +4,20 @@
  * @description: 
  */
 
+#define _GNU_SOURCE
+
 #include "uts.h"
+#include <log/log.h>
+#include <utils/utils.h>
+#include <unistd.h>
+#include <sys/mount.h>
+#include <sys/wait.h>
+#include <sched.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
 
 /**
  * @brief
