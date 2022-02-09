@@ -31,7 +31,7 @@ bool set_ipc(struct ipc *ipc) {
     return flag;
 }
 
-int enter_ipc(struct ipc *ipc) {
+int enter_ipc(void *ipc) {
     log_d("start set ipc");
     exit(set_ipc(ipc));
 }
@@ -44,14 +44,14 @@ bool create_ipc(struct ipc *ipc) {
         return -1;
     }
     log_t("clone 前");
-    pid_t pid = clone(enter_ipc, child_stack + MiB(1), CLONE_NEWUTS | SIGCHLD, ipc);
+    pid_t pid = clone(enter_ipc, child_stack + MiB(1), CLONE_NEWIPC | SIGCHLD, ipc);
     log_t("clone 后");
     if (pid == -1) {
         log_e("clone ipc fail.");
         goto free;
     }
     /*等待子进程*/
-    if (waitpid(pid, &status, 0) == -1) {
+       if (waitpid(pid, &status, 0) == -1) {
         log_e("[waitpid:%d] fail.", pid);
         goto free;
     }
