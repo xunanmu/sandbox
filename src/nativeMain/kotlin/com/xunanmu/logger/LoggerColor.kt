@@ -1,88 +1,87 @@
 package com.xunanmu.logger
 
-import kotlin.math.sign
-
 /**
  * 前景色枚举值
  * @param i
  */
-enum class LoggerColor {
-    BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    BLUE,
-    PURPLE,
-    CYAN,
-    WHITE,
+enum class LoggerColor(val i: Int) {
+    BLACK(30),
+    RED(31),
+    GREEN(32),
+    YELLOW(33),
+    BLUE(34),
+    PURPLE(35),
+    CYAN(36),
+    WHITE(37),
+    BRIGHT_BLACK(90),
+    BRIGHT_RED(91),
+    BRIGHT_GREEN(92),
+    BRIGHT_YELLOW(93),
+    BRIGHT_BLUE(94),
+    BRIGHT_PURPLE(95),
+    BRIGHT_CYAN(96),
+    BRIGHT_WHITE(97),
 }
 
 
 /**
  * 设置字符串的颜色
  *
- * @param any
+ * @param string
  * @return Sting
  */
-inline fun LoggerColor.setColor(any:Any?): String {
-    return "\u001b[$3{this.ordinal}m${any?.toString()}\u001b[0m"
+inline fun LoggerColor.setColor(string: String): String {
+    return "\u001b[${this.i}m${string}\u001b[0m"
 }
+
 
 /**
- * 设置字符串的颜色,亮色
- *
- * @param any
- * @return Sting
+ * 下面这些函数供Sting使用
  */
-inline fun LoggerColor.setBrightColor(any:Any?): String {
-    return "\u001b[9${this.ordinal}m${any?.toString()}\u001b[0m"
-}
-
-
-public val Any?.black : String
+val String.black : String
     get() = LoggerColor.BLACK.setColor(this)
 
-public val Any?.red : String
+val String.red : String
     get() = LoggerColor.RED.setColor(this)
 
-public val Any?.green : String
+val String.green : String
     get() = LoggerColor.GREEN.setColor(this)
 
-public val Any?.yellow : String
+val String.yellow : String
     get() = LoggerColor.YELLOW.setColor(this)
 
-public val Any?.blue : String
+val String.blue : String
     get() = LoggerColor.BLUE.setColor(this)
 
-public val Any?.purple : String
+val String.purple : String
     get() = LoggerColor.PURPLE.setColor(this)
 
-public val Any?.cyan : String
+val String.cyan : String
     get() = LoggerColor.CYAN.setColor(this)
 
-public val Any?.white : String
+val String.white : String
     get() = LoggerColor.WHITE.setColor(this)
 
-public val Any?.brightBlack : String
-    get() = LoggerColor.BLACK.setBrightColor(this)
+val String.brightBlack : String
+    get() = LoggerColor.BRIGHT_BLACK.setColor(this)
 
-public val Any?.brightRed : String
-    get() = LoggerColor.RED.setBrightColor(this)
+val String.brightRed : String
+    get() = LoggerColor.BRIGHT_RED.setColor(this)
 
-public val Any?.brightGreen : String
-    get() = LoggerColor.GREEN.setBrightColor(this)
+val String.brightGreen : String
+    get() = LoggerColor.BRIGHT_GREEN.setColor(this)
 
-public val Any?.brightYellow : String
-    get() = LoggerColor.YELLOW.setBrightColor(this)
+val String.brightYellow : String
+    get() = LoggerColor.BRIGHT_YELLOW.setColor(this)
 
-public val Any?.brightBlue : String
-    get() = LoggerColor.BLUE.setBrightColor(this)
+val String.brightBlue : String
+    get() = LoggerColor.BRIGHT_BLUE.setColor(this)
 
-public val Any?.brightPurple : String
-    get() = LoggerColor.PURPLE.setBrightColor(this)
+val String.brightPurple : String
+    get() = LoggerColor.BRIGHT_PURPLE.setColor(this)
 
-public val Any?.brightCyan : String
-    get() = LoggerColor.CYAN.setBrightColor(this)
+val String.brightCyan : String
+    get() = LoggerColor.BRIGHT_CYAN.setColor(this)
 
-public val Any?.brightWhite : String
-    get() = LoggerColor.WHITE.setBrightColor(this)
+val String.brightWhite : String
+    get() = LoggerColor.BRIGHT_WHITE.setColor(this)

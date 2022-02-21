@@ -1,47 +1,17 @@
 import com.xunanmu.logger.*
-import logger.*
-import kotlin.system.measureNanoTime
 
+val logger = LinuxX64Logger("test")
 
 fun main() {
-    val logger = LinuxX64Logger("test")
-    LoggerConfig.loggerLevel = LoggerLevel.TRACE
-    println(measureNanoTime {
-        logger.error("这是个错误信息")
-        logger.warn("这是一个警告信息")
-        logger.info("这是一个普通消息")
-        logger.debug("这是debug信息")
-        logger.trace("这是一个追踪信息")
-        logger.error("这是个错误信息")
-        logger.warn("这是一个警告信息")
-        logger.info("这是一个普通消息")
-        logger.debug("这是debug信息")
-        logger.trace("这是一个追踪信息")
-    })
-    println(measureNanoTime {
-        logger_output(LOGGER_ERROR, 0, null, null, "这是个错误信息%d", 1)
-        logger_output(LOGGER_WARN, 0, null, null, "这是个错误信息%d", 2)
-        logger_output(LOGGER_INFO, 0, null, null, "这是个错误信息%d", 3)
-        logger_output(LOGGER_DEBUG, 0, null, null, "这是个错误信息%d", 4)
-        logger_output(LOGGER_TRACE, 0, null, null, "这是个错误信息%d", 5)
-        logger_output(LOGGER_ERROR, 0, null, null, "这是个错误信息%d", 1)
-        logger_output(LOGGER_WARN, 0, null, null, "这是个错误信息%d", 2)
-        logger_output(LOGGER_INFO, 0, null, null, "这是个错误信息%d", 3)
-        logger_output(LOGGER_DEBUG, 0, null, null, "这是个错误信息%d", 4)
-        logger_output(LOGGER_TRACE, 0, null, null, "这是个错误信息%d", 5)
-    })
-    println(measureNanoTime{
-        logger_output(LOGGER_ERROR, 0, null, null, "这是个错误信息%d", 1)
-        logger_output(LOGGER_WARN, 0, null, null, "这是个错误信息%d", 2)
-        logger_output(LOGGER_INFO, 0, null, null, "这是个错误信息%d", 3)
-        logger_output(LOGGER_DEBUG, 0, null, null, "这是个错误信息%d", 4)
-        logger_output(LOGGER_TRACE, 0, null, null, "这是个错误信息%d", 5)
-    })
-    println(measureNanoTime{
-        logger.error("这是个错误信息")
-        logger.warn("这是一个警告信息")
-        logger.info("这是一个普通消息")
-        logger.debug("这是debug信息")
-        logger.trace("这是一个追踪信息")
-    })
+    val throwable = Throwable()
+    logger.error("这是个程序错误信息",throwable)
+    logger.warn("这是个程序警告信息",throwable)
+    logger.info("这是个程序一般消息",throwable)
+    logger.debug("这是个程序调试信息",throwable)
+    logger.trace("这是个程序追踪内容",throwable)
+    logger.error()
+    logger.warn()
+    logger.info()
+    logger.debug()
+    logger.trace()
 }

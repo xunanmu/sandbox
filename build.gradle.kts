@@ -1,3 +1,5 @@
+@file:Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 import org.jetbrains.kotlin.utils.addToStdlib.ifFalse
 import java.net.URL
 import com.google.common.io.Files
@@ -15,13 +17,18 @@ repositories {
 
 ("sched.klib" in mkdir("lib").list()).ifFalse {
     URL("https://gitee.com/xunanmu/klib/raw/master/linuxX64/sched.klib").apply {
-        Files.write(readBytes(),file("lib/sched.klib"))
+        Files.write(readBytes(), file("lib/sched.klib"))
     }
 }
 
+("datetime.klib" in mkdir("lib").list()).ifFalse {
+    URL("https://gitee.com/xunanmu/klib/raw/master/linuxX64/datetime.klib").apply {
+        Files.write(readBytes(), file("lib/datetime.klib"))
+    }
+}
 kotlin {
 
-    linuxX64("native"){
+    linuxX64("native") {
         binaries {
             executable {
                 entryPoint = "main"
@@ -29,7 +36,7 @@ kotlin {
         }
     }
     sourceSets {
-        val nativeMain by getting{
+        val nativeMain by getting {
             dependencies {
                 implementation(fileTree("lib"))
             }
