@@ -1,10 +1,7 @@
-import com.xunanmu.logger.*
-import com.xunanmu.sandbox.Uts
+
+import com.xunanmu.logger.LinuxX64Logger
 import com.xunanmu.utils.createFile
-import kotlinx.cinterop.*
-import kotlinx.cinterop.nativeHeap.alloc
-import platform.posix.*
-import sched.*
+
 
 val logger = LinuxX64Logger("test")
 

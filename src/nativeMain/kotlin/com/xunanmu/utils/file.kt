@@ -1,23 +1,68 @@
 package com.xunanmu.utils
 
+import com.xunanmu.logger.error
+import com.xunanmu.logger.trace
 import kotlinx.cinterop.*
+import logger
 import platform.posix.*
 
-
+/**
+ * 可以直接忽略目录创建文件
+ *
+ * @param filePath
+ * @return Boolean
+ */
 fun createFile(filePath:String):Boolean{
     val dirs = filePath.split('/')
-    val dirPath = if(dirs[0]=="~") getenv("HOME")?.toKString() else dirs[0]
-    for (i in 1..dirs.size){
+    logger.trace("{[${popen("pwd")}],[$filePath],$dirs}")
+    var dirPath = if(dirs[0]=="~") getenv("HOME")?.toKString() else dirs[0]
+    for (i in 1 until dirs.size){
         val stat = cValue<stat>()
         stat.useContents {
             stat(dirPath,ptr)
+            if (S_ISDIR(st_mode)){
+                logger.trace("This directory is[$dirPath]")
+            }else if(mkdir(dirPath, 0b011_000_000)==-1){
+                logger.error("Unable to create directory [$dirPath], please check the path.system error hint:[${strerror(errno)?.toKString()}]")
+                return false
+            }
         }
-        mode_t
-
+        dirPath = dirPath+"/"+dirs[i]
     }
+    val fd = open(dirPath, O_CREAT)
+    if (fd == -1){
+        logger.error("create [$filePath] file fail,please check the path.system error hint:[${strerror(errno)?.toKString()}]")
+        return false
+    }
+    close(fd)
     return true
 }
 
+
+inline fun S_ISLNK(st_mode: mode_t) = st_mode.and(S_IFMT.toUInt()) == S_IFLNK.toUInt()
+inline fun S_ISREG(st_mode: mode_t) = st_mode.and(S_IFMT.toUInt()) == S_IFREG.toUInt()
+inline fun S_ISDIR(st_mode: mode_t) = st_mode.and(S_IFMT.toUInt()) == S_IFDIR.toUInt()
+inline fun S_ISCHR(st_mode: mode_t) = st_mode.and(S_IFMT.toUInt()) == S_IFCHR.toUInt()
+inline fun S_ISBLK(st_mode: mode_t) = st_mode.and(S_IFMT.toUInt()) == S_IFBLK.toUInt()
+inline fun S_ISSOCK(st_mode: mode_t) = st_mode.and(S_IFMT.toUInt()) == S_IFSOCK.toUInt()
+
+/**
+ * 获取终端命令内容
+ *
+ * @param string 命令字符
+ * @return String
+ */
+inline fun popen(string: String):String{
+    val fp = popen(string,"r")
+    var kString = ""
+    memScoped {
+        val cString = allocArray<ByteVar>(1024)
+        fread(cString,1,1024,fp)
+        pclose(fp)
+        kString = cString.toKString()
+    }
+    return kString
+}
 
 /**stat结构体参数说明
 struct stat

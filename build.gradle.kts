@@ -1,8 +1,8 @@
 @file:Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
+import com.google.common.io.Files
 import org.jetbrains.kotlin.utils.addToStdlib.ifFalse
 import java.net.URL
-import com.google.common.io.Files
 
 plugins {
     kotlin("multiplatform") version "1.6.10"
