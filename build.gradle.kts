@@ -34,6 +34,15 @@ kotlin {
                 entryPoint = "main"
             }
         }
+        compilations.getByName("main"){
+            cinterops{
+                val C by creating{
+                    defFile(project.file("src/nativeInterop/cinterop/linux.def"))
+                    compilerOpts("-I/path")
+                    includeDirs.allHeaders("path")
+                }
+            }
+        }
     }
     sourceSets {
         val nativeMain by getting {

@@ -1,0 +1,3 @@
+package=C
+headers=sched.h sys/types.h sys/wait.h unistd.h
+compilerOpts=-O3 -static -D _GNU_SOURCE  -I/usr/include/x86_64-linux-gnu -I/usr/include/
