@@ -13,8 +13,10 @@ import platform.posix.*
  * @return Boolean
  */
 fun createFile(filePath:String):Boolean{
+    if(access(filePath, C.F_OK) == 0) return true
     val dirs = filePath.split('/')
-    logger.trace("{[${popen("pwd")}],[$filePath],$dirs}")
+    val pwd = popen("pwd")
+    logger.trace("{[$pwd],[$filePath],$dirs}")
     var dirPath = if(dirs[0]=="~") getenv("HOME")?.toKString() else dirs[0]
     for (i in 1 until dirs.size){
         val stat = cValue<stat>()
@@ -23,15 +25,15 @@ fun createFile(filePath:String):Boolean{
             if (S_ISDIR(st_mode)){
                 logger.trace("This directory is[$dirPath]")
             }else if(mkdir(dirPath, 0b110_000_000)==-1){
-                logger.error("Unable to create directory [$dirPath], please check the path.system error hint:[${strerror(errno)?.toKString()}]")
+                logger.error("Unable to create directory [${"$pwd/$dirPath"}], please check the path. system error hint:[${strerror(errno)?.toKString()}]")
                 return false
             }
         }
         dirPath = dirPath+"/"+dirs[i]
     }
-    val fd = open(dirPath, O_CREAT)
+    val fd = open(dirPath, O_CREAT, S_IRUSR)
     if (fd == -1){
-        logger.error("create [$filePath] file fail,please check the path.system error hint:[${strerror(errno)?.toKString()}]")
+        logger.error("create [$pwd/$filePath] file fail,please check the path.system error hint:[${strerror(errno)?.toKString()}]")
         return false
     }
     close(fd)
