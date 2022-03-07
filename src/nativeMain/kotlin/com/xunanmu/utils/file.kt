@@ -22,7 +22,7 @@ fun createFile(filePath:String):Boolean{
             stat(dirPath,ptr)
             if (S_ISDIR(st_mode)){
                 logger.trace("This directory is[$dirPath]")
-            }else if(mkdir(dirPath, 0b011_000_000)==-1){
+            }else if(mkdir(dirPath, 0b110_000_000)==-1){
                 logger.error("Unable to create directory [$dirPath], please check the path.system error hint:[${strerror(errno)?.toKString()}]")
                 return false
             }
@@ -61,7 +61,7 @@ inline fun popen(string: String):String{
         pclose(fp)
         kString = cString.toKString()
     }
-    return kString
+    return kString.dropLast(1)
 }
 
 /**stat结构体参数说明

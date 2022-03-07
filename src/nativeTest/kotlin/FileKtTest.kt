@@ -6,9 +6,9 @@ import kotlin.test.assertEquals
 
 class FileKtTest {
     @Test
-    fun testCreateFile(): Unit {
+    fun testCreateFile(){
         if(createFile("test/test")){
-           assertEquals("test/test\n",popen("ls test/test"))
+           assertEquals("test/test",popen("ls test/test"))
         }
         assertEquals(false, createFile("test/test/test"))
     }
